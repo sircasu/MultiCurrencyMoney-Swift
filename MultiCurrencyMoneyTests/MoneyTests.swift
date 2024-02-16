@@ -9,21 +9,30 @@ import XCTest
 import MultiCurrencyMoney
 
 
-class Dollar: Equatable {
+class Money: Equatable {
     
     private(set) var amount: Int
     
-    init(_ amount: Int){
+    init(amount: Int) {
         self.amount = amount
+    }
+    
+    static func == (lhs: Money, rhs: Money) -> Bool {
+        lhs.amount == rhs.amount
+    }
+}
+
+class Dollar: Money {
+
+    
+    init(_ amount: Int){
+        super.init(amount: amount)
     }
     
     func times(_ multiplier: Int) -> Dollar {
         return Dollar(amount * multiplier)
     }
     
-    static func == (lhs: Dollar, rhs: Dollar) -> Bool {
-        lhs.amount == rhs.amount
-    }
 }
 
 
