@@ -27,14 +27,41 @@ class Dollar: Equatable {
 }
 
 
+class Franc: Equatable {
+    
+    private(set) var amount: Int
+    
+    init(_ amount: Int){
+        self.amount = amount
+    }
+    
+    func times(_ multiplier: Int) -> Franc {
+        return Franc(amount * multiplier)
+    }
+    
+    static func == (lhs: Franc, rhs: Franc) -> Bool {
+        lhs.amount == rhs.amount
+    }
+}
+
+
 final class MoneyTests: XCTestCase {
 
-    func test_multiplication() {
+    func test_dollarMultiplication() {
         
         let five = Dollar(5)
         
         XCTAssertEqual(Dollar(10), five.times(2))
         XCTAssertEqual(Dollar(15), five.times(3))
+
+    }
+    
+    func test_francMultiplication() {
+        
+        let five = Franc(5)
+        
+        XCTAssertEqual(Franc(10), five.times(2))
+        XCTAssertEqual(Franc(15), five.times(3))
 
     }
     
