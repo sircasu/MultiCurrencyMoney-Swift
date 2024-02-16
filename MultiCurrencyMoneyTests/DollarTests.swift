@@ -11,7 +11,7 @@ import MultiCurrencyMoney
 
 class Dollar: Equatable {
     
-    var amount: Int
+    private var amount: Int
     
     init(_ amount: Int){
         self.amount = amount
@@ -33,13 +33,13 @@ final class DollarTests: XCTestCase {
         
         let five = Dollar(5)
         
-        let productAmount1 = five.times(2)
+        let product = Dollar(five.times(2))
         
-        XCTAssertEqual(productAmount1, 10)
+        XCTAssertEqual(product, Dollar(10))
         
-        let productAmount2 = five.times(3)
+        let product2 = Dollar(five.times(3))
         
-        XCTAssertEqual(productAmount2, 15)
+        XCTAssertEqual(product2, Dollar(15))
     }
     
     func test_equality() {
