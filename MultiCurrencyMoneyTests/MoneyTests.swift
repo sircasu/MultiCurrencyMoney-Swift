@@ -1,6 +1,6 @@
 //
-//  DollarTests.swift
-//  DollarTests
+//  MoneyTests.swift
+//  MoneyTests
 //
 //  Created by Matteo Casu on 15/02/24.
 //
@@ -27,7 +27,7 @@ class Dollar: Equatable {
 }
 
 
-final class DollarTests: XCTestCase {
+final class MoneyTests: XCTestCase {
 
     func test_multiplication() {
         
