@@ -16,8 +16,8 @@ class Dollar {
         self.amount = amount
     }
     
-    func times(_ multiplier: Int) {
-        amount *= multiplier
+    func times(_ multiplier: Int) -> Int {
+        return amount * multiplier
     }
 }
 
@@ -26,10 +26,14 @@ final class DollarTests: XCTestCase {
 
     func test_multiplication() {
         
-        let dollars = Dollar(5)
+        let five = Dollar(5)
         
-        dollars.times(2)
+        let productAmount1 = five.times(2)
         
-        XCTAssertEqual(dollars.amount, 10)
+        XCTAssertEqual(productAmount1, 10)
+        
+        let productAmount2 = five.times(3)
+        
+        XCTAssertEqual(productAmount2, 15)
     }
 }
