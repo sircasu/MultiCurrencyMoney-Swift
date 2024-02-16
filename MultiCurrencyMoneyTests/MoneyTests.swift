@@ -18,7 +18,7 @@ class Money: Equatable {
     }
     
     static func == (lhs: Money, rhs: Money) -> Bool {
-        lhs.amount == rhs.amount
+        lhs.amount == rhs.amount && type(of: lhs) == type(of: rhs)
     }
 }
 
@@ -31,7 +31,6 @@ class Dollar: Money {
     func times(_ multiplier: Int) -> Dollar {
         return Dollar(amount * multiplier)
     }
-    
 }
 
 
@@ -71,8 +70,11 @@ final class MoneyTests: XCTestCase {
     func test_equality() {
         
         XCTAssertEqual(Dollar(5), Dollar(5))
-        XCTAssertNotEqual(Dollar(5), Dollar(6))        
+        XCTAssertNotEqual(Dollar(5), Dollar(6))
+        
         XCTAssertEqual(Franc(5), Franc(5))
         XCTAssertNotEqual(Franc(5), Franc(6))
+        
+        XCTAssertNotEqual(Franc(5), Dollar(5))
     }
 }
