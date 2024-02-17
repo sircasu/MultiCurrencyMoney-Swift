@@ -27,12 +27,12 @@ class Money: Equatable, MoneyProtocol {
         self.currency = currency
     }
     
-    static func dollar(_ amount: Int) -> Dollar {
-        return Dollar(amount, "USD")
+    static func dollar(_ amount: Int) -> Money {
+        return Money(amount, "USD")
     }
         
-    static func franc(_ amount: Int) -> Franc {
-        return Franc(amount, "CHF")
+    static func franc(_ amount: Int) -> Money {
+        return Money(amount, "CHF")
     }
     
     func times(_ multiplier: Int) -> Money {
@@ -47,12 +47,6 @@ class Money: Equatable, MoneyProtocol {
     }
 }
 
-
-class Dollar: Money {}
-
-
-
-class Franc: Money {}
 
 
 final class MoneyTests: XCTestCase {
@@ -86,17 +80,8 @@ final class MoneyTests: XCTestCase {
         
         XCTAssertEqual(Money.dollar(5), Money.dollar(5))
         XCTAssertNotEqual(Money.dollar(5), Money.dollar(6))
-        
-        XCTAssertEqual(Money.franc(5), Money.franc(5))
-        XCTAssertNotEqual(Money.franc(5), Money.franc(6))
-        
         XCTAssertNotEqual(Money.franc(5), Money.dollar(5))
     }
     
-    
-    func test_differenceClassQEquality() {
-        
-        XCTAssertEqual(Money(10, "CHF"), Franc(10, "CHF"))
-    }
     
 }
