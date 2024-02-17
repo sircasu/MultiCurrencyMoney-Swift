@@ -9,10 +9,15 @@ import XCTest
 import MultiCurrencyMoney
 
 protocol MoneyProtocol {
+    
     func times(_ multiplier :Int) -> Money
+    
+    func currency() -> String
+    
 }
 
 class Money: Equatable, MoneyProtocol {
+
 
     private(set) var amount: Int
     
@@ -31,6 +36,9 @@ class Money: Equatable, MoneyProtocol {
     func times(_ multiplier: Int) -> Money {
         return Money(amount * multiplier)
     }
+    
+    
+    func currency() -> String { "" }
  
     static func == (lhs: Money, rhs: Money) -> Bool {
         lhs.amount == rhs.amount && type(of: lhs) == type(of: rhs)
@@ -39,10 +47,14 @@ class Money: Equatable, MoneyProtocol {
 
 
 class Dollar: Money {
+    
 
     override func times(_ multiplier: Int) -> Money {
         return Dollar(amount * multiplier)
     }
+    
+    
+    override func currency() -> String { "USD" }
 }
 
 
@@ -52,6 +64,8 @@ class Franc: Money {
     override func times(_ multiplier: Int) -> Money {
         return Franc(amount * multiplier)
     }
+    
+    override func currency() -> String { "CHF" }
     
 }
 
@@ -76,6 +90,13 @@ final class MoneyTests: XCTestCase {
 
     }
     
+    
+    func test_currency() {
+        
+        XCTAssertEqual(Money.dollar(1).currency(), "USD")
+        XCTAssertEqual(Money.franc(1).currency(), "CHF")
+    }
+    
     func test_equality() {
         
         XCTAssertEqual(Money.dollar(5), Money.dollar(5))
@@ -86,4 +107,6 @@ final class MoneyTests: XCTestCase {
         
         XCTAssertNotEqual(Money.franc(5), Money.dollar(5))
     }
+    
+    
 }
