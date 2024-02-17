@@ -16,7 +16,7 @@ protocol MoneyProtocol {
     
 }
 
-class Money: Equatable, MoneyProtocol {
+class Money: MoneyProtocol {
 
 
     private(set) var amount: Int
@@ -39,14 +39,19 @@ class Money: Equatable, MoneyProtocol {
         return Money(amount * multiplier, currency)
     }
     
-    
     func getCurrency() -> String { currency }
  
+    func plus(_ addend: Money) -> Money {
+        Money(amount + addend.amount, currency)
+    }
+
+}
+
+extension Money: Equatable {
     static func == (lhs: Money, rhs: Money) -> Bool {
         lhs.amount == rhs.amount && lhs.currency == rhs.currency
     }
 }
-
 
 
 final class MoneyTests: XCTestCase {
@@ -73,5 +78,11 @@ final class MoneyTests: XCTestCase {
         XCTAssertNotEqual(Money.franc(5), Money.dollar(5))
     }
     
+    
+    func test_simpleAddition() {
+        
+        let sum = Money.dollar(5).plus(Money.dollar(5))
+        XCTAssertEqual(sum, Money.dollar(10))
+    }
     
 }
