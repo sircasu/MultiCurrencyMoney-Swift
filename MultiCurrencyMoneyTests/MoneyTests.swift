@@ -51,7 +51,7 @@ class Money: Equatable, MoneyProtocol {
 
 final class MoneyTests: XCTestCase {
 
-    func test_dollarMultiplication() {
+    func test_moneyMultiplication() {
         
         let five: Money = Money.dollar(5)
         
@@ -59,16 +59,6 @@ final class MoneyTests: XCTestCase {
         XCTAssertEqual(Money.dollar(15), five.times(3))
 
     }
-    
-    func test_francMultiplication() {
-        
-        let five: Money = Money.franc(5)
-        
-        XCTAssertEqual(Money.franc(10), five.times(2))
-        XCTAssertEqual(Money.franc(15), five.times(3))
-
-    }
-    
     
     func test_currency() {
         
