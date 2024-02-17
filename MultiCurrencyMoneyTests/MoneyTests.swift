@@ -43,26 +43,16 @@ class Money: Equatable, MoneyProtocol {
     func getCurrency() -> String { currency }
  
     static func == (lhs: Money, rhs: Money) -> Bool {
-        lhs.amount == rhs.amount && type(of: lhs) == type(of: rhs)
+        lhs.amount == rhs.amount && lhs.currency == rhs.currency
     }
 }
 
 
-class Dollar: Money {
-    
-    override func times(_ multiplier: Int) -> Money {
-        return Dollar(amount * multiplier, currency)
-    }
-}
+class Dollar: Money {}
 
 
 
-class Franc: Money {
-    
-    override func times(_ multiplier: Int) -> Money {
-        return Franc(amount * multiplier, currency)
-    }
-}
+class Franc: Money {}
 
 
 final class MoneyTests: XCTestCase {
@@ -103,5 +93,10 @@ final class MoneyTests: XCTestCase {
         XCTAssertNotEqual(Money.franc(5), Money.dollar(5))
     }
     
+    
+    func test_differenceClassQEquality() {
+        
+        XCTAssertEqual(Money(10, "CHF"), Franc(10, "CHF"))
+    }
     
 }
