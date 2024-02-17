@@ -12,7 +12,7 @@ protocol MoneyProtocol {
     
     func times(_ multiplier :Int) -> Money
     
-    func currency() -> String
+    func getCurrency() -> String
     
 }
 
@@ -20,25 +20,27 @@ class Money: Equatable, MoneyProtocol {
 
 
     private(set) var amount: Int
+    private(set) var currency: String
     
-    init(_ amount: Int) {
+    init(_ amount: Int, _ currency: String) {
         self.amount = amount
+        self.currency = currency
     }
     
     static func dollar(_ amount: Int) -> Dollar {
-        return Dollar(amount)
+        return Dollar(amount, "USD")
     }
         
     static func franc(_ amount: Int) -> Franc {
-        return Franc(amount)
+        return Franc(amount, "CHF")
     }
     
     func times(_ multiplier: Int) -> Money {
-        return Money(amount * multiplier)
+        return Money(amount * multiplier, currency)
     }
     
     
-    func currency() -> String { "" }
+    func getCurrency() -> String { currency }
  
     static func == (lhs: Money, rhs: Money) -> Bool {
         lhs.amount == rhs.amount && type(of: lhs) == type(of: rhs)
@@ -48,13 +50,9 @@ class Money: Equatable, MoneyProtocol {
 
 class Dollar: Money {
     
-
     override func times(_ multiplier: Int) -> Money {
-        return Dollar(amount * multiplier)
+        return Dollar(amount * multiplier, currency)
     }
-    
-    
-    override func currency() -> String { "USD" }
 }
 
 
@@ -62,11 +60,8 @@ class Dollar: Money {
 class Franc: Money {
     
     override func times(_ multiplier: Int) -> Money {
-        return Franc(amount * multiplier)
+        return Franc(amount * multiplier, currency)
     }
-    
-    override func currency() -> String { "CHF" }
-    
 }
 
 
@@ -93,8 +88,8 @@ final class MoneyTests: XCTestCase {
     
     func test_currency() {
         
-        XCTAssertEqual(Money.dollar(1).currency(), "USD")
-        XCTAssertEqual(Money.franc(1).currency(), "CHF")
+        XCTAssertEqual(Money.dollar(1).getCurrency(), "USD")
+        XCTAssertEqual(Money.franc(1).getCurrency(), "CHF")
     }
     
     func test_equality() {
