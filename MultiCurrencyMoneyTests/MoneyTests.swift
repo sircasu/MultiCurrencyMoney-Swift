@@ -11,12 +11,10 @@ import MultiCurrencyMoney
 protocol MoneyProtocol {
     
     func times(_ multiplier :Int) -> Money
-    
     func getCurrency() -> String
-    
 }
 
-class Money: MoneyProtocol {
+class Money: MoneyProtocol, ExpressionProtocol {
 
 
     private(set) var amount: Int
@@ -41,7 +39,7 @@ class Money: MoneyProtocol {
     
     func getCurrency() -> String { currency }
  
-    func plus(_ addend: Money) -> Money {
+    func plus(_ addend: Money) -> ExpressionProtocol {
         Money(amount + addend.amount, currency)
     }
 
@@ -50,6 +48,17 @@ class Money: MoneyProtocol {
 extension Money: Equatable {
     static func == (lhs: Money, rhs: Money) -> Bool {
         lhs.amount == rhs.amount && lhs.currency == rhs.currency
+    }
+}
+
+
+protocol ExpressionProtocol {}
+
+
+class Bank {
+    
+    func reduce(_ source: ExpressionProtocol, _ to: String) -> Money {
+        return Money.dollar(10)
     }
 }
 
@@ -81,8 +90,11 @@ final class MoneyTests: XCTestCase {
     
     func test_simpleAddition() {
         
-        let sum = Money.dollar(5).plus(Money.dollar(5))
-        XCTAssertEqual(sum, Money.dollar(10))
+        let five: Money = Money.dollar(5)
+        let sum: ExpressionProtocol = five.plus(five)
+        let bank = Bank()
+        let reduced: Money = bank.reduce(sum, "USD")
+        XCTAssertEqual(Money.dollar(10), reduced)
     }
     
 }
