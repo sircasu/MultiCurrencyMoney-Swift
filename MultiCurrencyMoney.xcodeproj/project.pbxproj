@@ -10,6 +10,11 @@
 		85938C922B7EA3BC00B1452A /* MultiCurrencyMoney.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85938C892B7EA3BB00B1452A /* MultiCurrencyMoney.framework */; };
 		85938C972B7EA3BC00B1452A /* MoneyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85938C962B7EA3BC00B1452A /* MoneyTests.swift */; };
 		85938C982B7EA3BC00B1452A /* MultiCurrencyMoney.h in Headers */ = {isa = PBXBuildFile; fileRef = 85938C8C2B7EA3BB00B1452A /* MultiCurrencyMoney.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		85E27F742B98BEEA0000B6B0 /* Money.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E27F732B98BEEA0000B6B0 /* Money.swift */; };
+		85E27F762B98BF2B0000B6B0 /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E27F752B98BF2B0000B6B0 /* Expression.swift */; };
+		85E27F782B98BF3E0000B6B0 /* Bank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E27F772B98BF3E0000B6B0 /* Bank.swift */; };
+		85E27F7A2B98BF760000B6B0 /* Sum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E27F792B98BF760000B6B0 /* Sum.swift */; };
+		85E27F7C2B98BF920000B6B0 /* Pair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E27F7B2B98BF920000B6B0 /* Pair.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +32,11 @@
 		85938C8C2B7EA3BB00B1452A /* MultiCurrencyMoney.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MultiCurrencyMoney.h; sourceTree = "<group>"; };
 		85938C912B7EA3BC00B1452A /* MultiCurrencyMoneyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MultiCurrencyMoneyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85938C962B7EA3BC00B1452A /* MoneyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTests.swift; sourceTree = "<group>"; };
+		85E27F732B98BEEA0000B6B0 /* Money.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Money.swift; sourceTree = "<group>"; };
+		85E27F752B98BF2B0000B6B0 /* Expression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
+		85E27F772B98BF3E0000B6B0 /* Bank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bank.swift; sourceTree = "<group>"; };
+		85E27F792B98BF760000B6B0 /* Sum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sum.swift; sourceTree = "<group>"; };
+		85E27F7B2B98BF920000B6B0 /* Pair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pair.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +80,11 @@
 			isa = PBXGroup;
 			children = (
 				85938C8C2B7EA3BB00B1452A /* MultiCurrencyMoney.h */,
+				85E27F732B98BEEA0000B6B0 /* Money.swift */,
+				85E27F752B98BF2B0000B6B0 /* Expression.swift */,
+				85E27F772B98BF3E0000B6B0 /* Bank.swift */,
+				85E27F792B98BF760000B6B0 /* Sum.swift */,
+				85E27F7B2B98BF920000B6B0 /* Pair.swift */,
 			);
 			path = MultiCurrencyMoney;
 			sourceTree = "<group>";
@@ -140,11 +155,11 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					85938C882B7EA3BB00B1452A = {
 						CreatedOnToolsVersion = 15.0;
-						LastSwiftMigration = 1500;
+						LastSwiftMigration = 1520;
 					};
 					85938C902B7EA3BC00B1452A = {
 						CreatedOnToolsVersion = 15.0;
@@ -192,6 +207,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85E27F782B98BF3E0000B6B0 /* Bank.swift in Sources */,
+				85E27F7A2B98BF760000B6B0 /* Sum.swift in Sources */,
+				85E27F742B98BEEA0000B6B0 /* Money.swift in Sources */,
+				85E27F762B98BF2B0000B6B0 /* Expression.swift in Sources */,
+				85E27F7C2B98BF920000B6B0 /* Pair.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +269,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -315,6 +336,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -342,9 +364,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 274M6WJ8NT;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -375,9 +399,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 274M6WJ8NT;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -406,8 +432,10 @@
 		85938C9F2B7EA3BC00B1452A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 274M6WJ8NT;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -421,8 +449,10 @@
 		85938CA02B7EA3BC00B1452A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 274M6WJ8NT;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
