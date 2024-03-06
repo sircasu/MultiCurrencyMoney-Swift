@@ -39,8 +39,13 @@ class Money: MoneyProtocol, Expression {
     
     func getCurrency() -> String { currency }
  
+
     func plus(_ addend: Money) -> Expression {
-        Money(amount + addend.amount, currency)
+        Sum(self, addend)
+    }
+    
+    func reduce(_ to: String) -> Money {
+        self
     }
 
 }
@@ -52,13 +57,34 @@ extension Money: Equatable {
 }
 
 
-protocol Expression {}
+protocol Expression {
+    func reduce(_ to: String) -> Money
+}
 
 
 class Bank {
     
     func reduce(_ source: Expression, _ to: String) -> Money {
-        return Money.dollar(10)
+
+        source.reduce(to)
+    }
+}
+
+
+class Sum: Expression {
+    
+    private (set) var augend: Money
+    private (set) var addend: Money
+    
+    init(_ augend: Money, _ addend: Money) {
+        self.augend = augend
+        self.addend = addend
+    }
+    
+    func reduce(_ to: String) -> Money {
+        
+        let amount: Int = augend.amount + addend.amount
+        return Money(amount, to)
     }
 }
 
@@ -97,4 +123,30 @@ final class MoneyTests: XCTestCase {
         XCTAssertEqual(Money.dollar(10), reduced)
     }
     
+    
+    func testPlusReturnsSum() {
+        
+        let five: Money = Money.dollar(5)
+        let result: Expression = five.plus(five)
+        let sum: Sum = result as! Sum
+        XCTAssertEqual(five, sum.augend)
+        XCTAssertEqual(five, sum.addend)
+    }
+    
+    
+    func testReduceSum() {
+        
+        let sum: Expression = Sum(Money.dollar(3), Money.dollar(4))
+        let bank = Bank()
+        let result: Money = bank.reduce(sum, "USD")
+        XCTAssertEqual(Money.dollar(7), result)
+    }
+    
+    
+    func testReduceMoney() {
+    
+        let bank = Bank()
+        let result: Money = bank.reduce(Money.dollar(1), "USD")
+        XCTAssertEqual(Money.dollar(1), result)
+    }
 }
