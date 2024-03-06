@@ -8,6 +8,8 @@
 import XCTest
 import MultiCurrencyMoney
 
+// MARK: Money
+
 protocol MoneyProtocol {
     
     func times(_ multiplier :Int) -> Money
@@ -44,8 +46,10 @@ class Money: MoneyProtocol, Expression {
         Sum(self, addend)
     }
     
-    func reduce(_ to: String) -> Money {
-        self
+    func reduce(_ bank: Bank, _ to: String) -> Money {
+    
+        let rate: Int = bank.rate(currency, to) ?? 1
+        return Money(amount / rate, to)
     }
 
 }
@@ -57,19 +61,39 @@ extension Money: Equatable {
 }
 
 
+// MARK: Expression
+
 protocol Expression {
-    func reduce(_ to: String) -> Money
+    func reduce(_ bank: Bank, _ to: String) -> Money
 }
 
+
+// MARK: Bank
 
 class Bank {
     
+    private(set) var rates: [Pair: Int] = [:]
+    
     func reduce(_ source: Expression, _ to: String) -> Money {
 
-        source.reduce(to)
+        source.reduce(self, to)
+    }
+    
+    func rate(_ from: String, _ to: String) -> Int? {
+
+        if from == to { return 1 }
+        let rate = rates[Pair(from, to)]
+        return rate
+    }
+    
+    
+    func addRate(_ from: String, _ to: String, _ rate: Int) {
+        rates[Pair(from, to)] = rate
     }
 }
 
+
+// MARK: Sum
 
 class Sum: Expression {
     
@@ -81,10 +105,35 @@ class Sum: Expression {
         self.addend = addend
     }
     
-    func reduce(_ to: String) -> Money {
+    func reduce(_ bank: Bank, _ to: String) -> Money {
         
         let amount: Int = augend.amount + addend.amount
         return Money(amount, to)
+    }
+}
+
+
+// MARK: pair
+
+class Pair: Equatable, Hashable {
+
+    
+    private (set) var from: String
+    private (set) var to: String
+    
+    init(_ from: String, _ to: String) {
+        self.from = from
+        self.to = to
+    }
+    
+    static func == (lhs: Pair, rhs: Pair) -> Bool {
+        lhs.from == rhs.from
+        && lhs.to == rhs.to
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(from)
+        hasher.combine(to)
     }
 }
 
@@ -148,5 +197,19 @@ final class MoneyTests: XCTestCase {
         let bank = Bank()
         let result: Money = bank.reduce(Money.dollar(1), "USD")
         XCTAssertEqual(Money.dollar(1), result)
+    }
+    
+    
+    func testReduceMoneyDifferentCurrency() {
+        
+        let bank = Bank()
+        bank.addRate("CHF", "USD", 2)
+        let result: Money = bank.reduce(Money.franc(2), "USD")
+        XCTAssertEqual(Money.dollar(1), result)
+    }
+    
+    
+    func testIdentifyRate() {
+        XCTAssertEqual(1, Bank().rate("USD", "USD"))
     }
 }
