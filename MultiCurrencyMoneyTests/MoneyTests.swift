@@ -12,7 +12,6 @@ import MultiCurrencyMoney
 
 protocol MoneyProtocol {
     
-    func times(_ multiplier :Int) -> Expression
     func getCurrency() -> String
 }
 
@@ -66,6 +65,7 @@ extension Money: Equatable {
 protocol Expression {
     func reduce(_ bank: Bank, _ to: String) -> Money
     func plus(_ addend: Expression) -> Expression
+    func times(_ multiplier: Int) -> Expression
 }
 
 
@@ -113,7 +113,11 @@ class Sum: Expression {
     }
     
     func plus(_ addend: Expression) -> Expression {
-        Money.dollar(10)
+        Sum(self, addend)
+    }
+    
+    func times(_ multiplier: Int) -> Expression {
+        Sum(augend.times(multiplier), addend.times(multiplier))
     }
 }
 
@@ -220,11 +224,41 @@ final class MoneyTests: XCTestCase {
     
     
     func testMixedAddition() {
+        
         let fiveBucks: Expression = Money.dollar(5)
         let tenFrancs: Expression = Money.franc(10)
         let bank = Bank()
         bank.addRate("CHF", "USD", 2)
         let result: Money = bank.reduce(fiveBucks.plus(tenFrancs), "USD")
         XCTAssertEqual(Money.dollar(10), result)
+    }
+    
+    
+    func testSumPlusMoney() {
+        
+        let fiveBucks: Expression = Money.dollar(5)
+        let tenFrancs: Expression = Money.franc(10)
+        let bank = Bank()
+        bank.addRate("CHF", "USD", 2)
+        let sum: Expression = Sum(fiveBucks, tenFrancs).plus(fiveBucks)
+        let result: Money = bank.reduce(sum, "USD")
+        XCTAssertEqual(Money.dollar(15), result)
+    }
+    
+    
+    
+    func testSumTimes() {
+        let fiveBucks: Expression = Money.dollar(5)
+        let tenFrancs: Expression = Money.franc(10)
+        let bank = Bank()
+        bank.addRate("CHF", "USD", 2)
+        let sum: Expression = Sum(fiveBucks, tenFrancs).times(2)
+        let result: Money = bank.reduce(sum, "USD")
+        XCTAssertEqual(Money.dollar(20), result)
+    }
+    
+    func testPlusSameCurrencyReturnsMoney() {
+        let sum: Expression = Money.dollar(1).plus(Money.dollar(1))
+        XCTAssertTrue(type(of: sum) != Money.self)
     }
 }
